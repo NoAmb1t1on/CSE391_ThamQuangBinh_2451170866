@@ -4,4 +4,4 @@
 - Lớp: 66KTPM2.
 - Email: thmquangbinh@gmail.com
 ## Tiến độ:
-Hoàn Tất.
+1. Phiếu Bài Tập 1: Hoàn Tất.
