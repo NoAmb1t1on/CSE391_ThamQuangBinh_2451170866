@@ -5,3 +5,4 @@
 - Email: thmquangbinh@gmail.com
 ## Tiến độ:
 1. Phiếu Bài Tập 1: Hoàn Tất.
+2. Phiếu Bài Tập 2: Hoàn Tất.
