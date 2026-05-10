@@ -49,5 +49,33 @@
     - Biểu đồ so sánh kích thước các dòng máy trong bài viết tư vấn chọn mua.
 ---
 
+## Phần C:
+### Câu C1:
+1. Lỗi 1: Dòng 2 — Input "Tên" thiếu `<label for="...">` và thuộc tính id, vi phạm accessibility. Sửa: `<label for="name">Tên:</label> <input type="text" id="name" name="name" required>`.
+2. Lỗi 2: Dòng 4 — Input `"Email"` dùng placeholder thay thế nhãn, thiếu required và name. Sửa: `<label for="email">Email:</label> <input type="email" id="email" name="email" placeholder="Email của bạn" required>`.
+3. Lỗi 3: Dòng 6 — Input "Mật khẩu" thiếu minlength để bảo mật và thiếu nhãn. Sửa: `<label for="pwd">Mật khẩu:</label> <input type="password" id="pwd" name="password" minlength="8" required>`.
+4. Lỗi 4: Dòng 7 — Input "Nhập lại mật khẩu" không có nhãn và id riêng biệt. Sửa: `<label for="re-pwd">Nhập lại mật khẩu:</label> <input type="password" id="re-pwd" name="re_password" required>`.
+5. Lỗi 5: Dòng 9 — Input "Phone" dùng `type="text"`, không tối ưu bàn phím số trên mobile. Sửa: `<label for="tel">Phone:</label> <input type="tel" id="tel" name="phone" pattern="[0-9]{10}">`.
+6. Lỗi 6: Dòng 11 — Thẻ `<select>` thiếu nhãn mô tả và thuộc tính name để gửi dữ liệu. Sửa: `<label for="city">Thành phố:</label> <select id="city" name="city"><option value="hn">Hà Nội</option>...</select>`.
+7. Lỗi 7: Dòng 16 — Thẻ `<label>` điều khoản không chứa hoặc không liên kết với input `type="checkbox"`. Sửa: `<input type="checkbox" id="terms" name="terms" required> <label for="terms">Tôi đồng ý điều khoản</label>`.
+8. Lỗi 8: Tổng thể — Thiếu thẻ `<button type="submit">` và không có thuộc tính action/method cho form. Sửa: Thay thế bằng `<button type="submit">Gửi</button> bên trong <form action="/submit" method="POST">`.
+
+### Câu C2:
+1. Regex Pattern cho CMND/CCCD và Số tài khoản
+    - CMND/CCCD (Đúng 12 chữ số): `pattern="[0-9]{12}"`.
+    - Số tài khoản (10 đến 15 chữ số): `pattern="[0-9]{10,15}"`.
+2. HTML5 Validation không đủ an toàn. Vì:
+    - Dễ bị vượt qua: Người dùng có thể dùng DevTools để xóa thuộc tính `required` hoặc `pattern`, hoặc dùng các công cụ như Postman để gửi dữ liệu trực tiếp lên server mà không thông qua trình duyệt.
+    - Mục đích chính: HTML5 validation chỉ phục vụ UX để báo lỗi nhanh, chứ không phải một rào cản bảo mật vững chắc.
+3. 3 loại validation HTML5 KHÔNG THỂ làm được (Cần JavaScript):
+    - Kiểm tra trùng lặp dữ liệu: Ví dụ kiểm tra email này đã được đăng ký trong Database hay chưa.
+    - So khớp hai trường : Ví dụ kiểm tra ô "Nhập lại PIN" có khớp với ô "PIN" đã nhập trước đó hay không.
+    - Thuật toán logic phức tạp: Ví dụ thuật toán Luhn để kiểm tra tính hợp lệ của số thẻ ngân hàng hoặc kiểm tra độ mạnh mật khẩu theo thời gian thực.
+4. 2 rủi ro bảo mật nếu chỉ validate trên Frontend:
+    - Tấn công Injection: Nếu không validate ở Backend, kẻ tấn công có thể gửi các đoạn mã độc vào Database để đánh cắp dữ liệu hoặc phá hoại hệ thống.
+    - Sai lệch dữ liệu tài chính: Kẻ xấu có thể gửi số tiền âm hoặc số lượng sản phẩm không hợp lệ, gây thất thoát tài sản nghiêm trọng cho ngân hàng.
+
+
+
 
 
