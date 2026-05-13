@@ -59,7 +59,52 @@
   - Đây là hiện tượng Margin Collapse trong CSS. Khi hai lề dọc của hai khối tiếp xúc với nhau, chúng không cộng dồn lại mà sẽ "nhập" vào nhau.
     - Trình duyệt sẽ so sánh hai giá trị lề và giữ lại giá trị lớn nhất.
     - Trong trường hợp này: $Max(25px, 40px) = 40px$.
-
+### Câu A4 (09_css_selectors.md - 3. ⚙️ Core Technical Truth):
+1. Specificity Score:
+    | Rule | Selector | A | B | C | Score |
+    |---|---|---|---|---|---|
+    | Rule A | `P` | 0 | 0 | 1 | (0,0,1) |
+    | Rule B | `.price` | 0 | 1 | 0 | (0,1,0) |
+    | Rule C | `#main-price` | 1 | 0 | 0 | (1,0,0) |
+    | Rule D | `p.price` | 0 | 1 | 1 | (0,1,1) |
+2. Element hiển thị màu Đỏ. Vì Trình duyệt so sánh các trọng số từ trái sang phải. Rule C có 1 ID $(1, 0, 0)$, đây là trọng số cao nhất so với các Rule còn lại (chỉ có Class hoặc Element). Dù Rule D có cả Element và Class cộng lại $(0, 1, 1)$, nó vẫn "thua" hoàn toàn trước 1 ID.
+3. Nếu thêm `<p class="price" id="main-price" style="color: orange;">`, element có màu Cam.
+4. Nếu Rule A thêm `!important`, element có màu Đen. Vì `!important` không phải là một phần của Specificity nhưng nó là một "lệnh cưỡng chế" phá vỡ mọi quy tắc Cascade thông thường. Nó sẽ ghi đè lên cả ID và cả Inline Style.
 ---
+## Phần C:
+### Câu C1:
+1. Theo mặc định, trình duyệt sử dụng box-sizing: content-box. Kích thước thực tế sẽ được tính theo công thức:
 
-    
+        Total Width = width + padding-left + padding-right + border-left + border-right
+
+    - SideBar: 300px(width) + 40px(padding) + 2px(border) = 342px
+    - Content: 660px(width) + 60px(padding) + 2px(border) = 722px
+3. layout bị vỡ vì tổng chiều rộng thực tế của hai khối là: 342px + 722px =1064px. Trong khi đó, Container của bạn chỉ rộng 960px. Vì 1064px > 960px, không gian không đủ để hai khối nằm cùng một hàng, nên theo cơ chế của float, khối thứ hai (.content) sẽ bị đẩy xuống dòng mới.
+4. Sửa:
+    - Cách 1: Sử dụng `border-box`: Đặt box-sizing: border-box. Lúc này 300px + 660px = 960px (vừa khít).
+    - Cách 2: không dùng `border-box`(tính toán lại width thủ công): Trừ đi phần padding và border khỏi giá trị width để tổng cuối cùng đạt đúng con số mong muốn:
+        - Content width: 660 - 60 - 2 = 598px.
+        - Sidebar width: 300 - 40 - 2 = 258px.
+### Câu C2:
+1. "Sản phẩm A" (h2) có `font-size = 20px` và `color = green`.Quá trình
+    - font-size: Selector `.card` `.title` có độ ưu tiên (0, 2, 0) trực tiếp nhắm vào phần tử này, giá trị là 20px.
+    - color:
+        - featured .title có độ ưu tiên (1, 1, 0) muốn màu red.
+        - `.highlight` có độ ưu tiên thấp hơn (0, 1, 0) nhưng lại có `!important`.
+        - Kết quả: `!important` phá vỡ mọi quy tắc Specificity thông thường, màu green thắng.
+2. "Mô tả sản phẩm" (p trong card featured) có `color = blue`. Quá trình:
+    - color:
+        - Selector `.card p` (0, 1, 1) áp dụng giá trị inherit.
+        - Nó sẽ ép thẻ p lấy màu từ cha trực tiếp của nó là `.card (có màu blue)`.
+        - Kết quả: Màu blue.
+3. "Sản phẩm B" (h2) có `font-size = 20px` và `color = blue`. Quá trình:
+    - font-size: Giống sản phẩm A, selector .card .title (0, 2, 0) áp dụng giá trị 20px.
+    - color:
+        - Không có selector nào trực tiếp quy định màu cho h2 này (ngo trừ `.highlight` không có ở đây).
+        - Nó sẽ thừa kế màu từ cha trực tiếp là `.card (color: blue)`.
+        - Kết quả: Màu blue.
+4. "Mô tả sản phẩm B" (p.highlight) có `color = green`. Quá trình:
+    - color:
+        - `.card` p (0, 1, 1) yêu cầu inherit (lấy màu blue từ cha).
+        - `.highlight` (0, 1, 0) yêu cầu màu green kèm theo `!important`.
+        - Kết quả: `!important` thắng, màu green.
