@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kiểm chứng Cascade & Inheritance</title>
+    <style>
+        body { font-size: 16px; color: #333; }
+        .container { font-size: 14px; }
+        .card { color: blue; border: 1px solid #ccc; margin: 10px; padding: 10px; }
+        .card .title { font-size: 20px; }
+        .card p { color: inherit; }
+        #featured .title { color: red; }
+        .highlight { color: green !important; }
+
+        .debug-info { font-size: 11px; color: #666; font-style: italic; display: block; margin-top: -5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="card" id="featured">
+            <h2 class="title highlight">Sản phẩm A</h2>
+            <span class="debug-info">(Dự kiến: 20px, green)</span>
+            <p>Mô tả sản phẩm</p>
+            <span class="debug-info">(Dự kiến: inherit -> blue)</span>
+        </div>
+
+        <div class="card">
+            <h2 class="title">Sản phẩm B</h2>
+            <span class="debug-info">(Dự kiến: 20px, blue)</span>
+            <p class="highlight">Mô tả sản phẩm B</p>
+            <span class="debug-info">(Dự kiến: !important -> green)</span>
+        </div>
+    </div>
+</body>
+</html>
