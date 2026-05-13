@@ -61,7 +61,7 @@
     - Trong trường hợp này: $Max(25px, 40px) = 40px$.
 ### Câu A4 (09_css_selectors.md - 3. ⚙️ Core Technical Truth):
 1. Specificity Score:
-    | Rule | Selector | A | B | C | Score |
+    | **Rule** | **Selector** | **A** | **B** | **C** | **Score** |
     |---|---|---|---|---|---|
     | Rule A | `P` | 0 | 0 | 1 | (0,0,1) |
     | Rule B | `.price` | 0 | 1 | 0 | (0,1,0) |
@@ -116,3 +116,21 @@
 - Giải thích sự khác biệt:
     - Với content-box, thuộc tính width chỉ định nghĩa kích thước của vùng chứa nội dung (content). Mọi giá trị padding và border sẽ được cộng dồn vào bên ngoài khiến hộp phình to ra.
     - Với border-box, trình duyệt sẽ ép toàn bộ nội dung, padding và border nằm gọn trong con số width đã định sẵn. Nếu bạn tăng padding, phần content sẽ tự động thu nhỏ lại để tổng kích thước không đổi.
+### Câu B3:
+1. 10 rule + specificity score:
+
+| **Selector** | **Specificity Score (a, b, c)** | **Color** |
+|---|---|---|
+| p | (0, 0, 1) | Gray |
+| .text | (0, 1, 0) | Silver |
+| p[class*="text"] | (0, 1, 1) | Lime |
+| .text.highlight | (0, 2, 0) | Pink |
+| p.text.highlight | (0, 2, 1) | Brown |
+| #demo | (1, 0, 0) | Blue |
+| p#demo | (1, 0, 1) | Purple |
+| #demo.text | (1, 1, 0) | Orange |
+| #demo.text.highlight | (1, 2, 0) | Cyan |
+| .highlight { color: red !important; } | Phá vỡ thang điểm | Red |
+
+2. Element cuối cùng hiển thị màu Đỏ. Vì mặc dù quy tắc số 9 có điểm Specificity rất cao (1, 2, 0), nhưng quy tắc số 10 sử dụng từ khóa `!important`. Trong CSS Cascade, `!important` là một lệnh cưỡng chế có quyền ưu tiên cao hơn bất kỳ Selector ID hay Class nào. Nếu bỏ `!important`, màu hiển thị sẽ là Cyan (quy tắc số 9) vì nó có điểm Specificity cao nhất.
+4. Thay đổi thứ tự rules trong CSS file kết quả không đổi. Vì trình duyệt luôn ưu tiên quy tắc có Specificity cao hơn bất kể nó nằm ở vị trí nào trong file CSS. Thứ tự viết code chỉ có tác dụng khi hai Selector có cùng điểm Specificity.
