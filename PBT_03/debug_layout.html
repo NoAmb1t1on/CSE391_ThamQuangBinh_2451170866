@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Layout CSS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Cách 1: Dùng border-box (Vừa khít 960px)</h2>
+    <div class="container fix-1">
+        <div class="sidebar">Sidebar (300px)</div>
+        <div class="content">Content (660px)</div>
+        <div class="clear"></div>
+    </div>
+
+    <br><br>
+
+    <h2>Cách 2: Tính lại Width thủ công (Content-box)</h2>
+    <div class="container fix-2">
+        <div class="sidebar">Sidebar (258px)</div>
+        <div class="content">Content (598px)</div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>
