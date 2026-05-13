@@ -108,3 +108,11 @@
         - `.card` p (0, 1, 1) yêu cầu inherit (lấy màu blue từ cha).
         - `.highlight` (0, 1, 0) yêu cầu màu green kèm theo `!important`.
         - Kết quả: `!important` thắng, màu green.
+---
+## Phần B:
+### Câu B2:
+- Hộp 1 (content-box): chiều rộng thực tế = 348.73px.
+- Hộp 2 (border-box): chiều rộng thực tế = 300px.
+- Giải thích sự khác biệt:
+    - Với content-box, thuộc tính width chỉ định nghĩa kích thước của vùng chứa nội dung (content). Mọi giá trị padding và border sẽ được cộng dồn vào bên ngoài khiến hộp phình to ra.
+    - Với border-box, trình duyệt sẽ ép toàn bộ nội dung, padding và border nằm gọn trong con số width đã định sẵn. Nếu bạn tăng padding, phần content sẽ tự động thu nhỏ lại để tổng kích thước không đổi.
