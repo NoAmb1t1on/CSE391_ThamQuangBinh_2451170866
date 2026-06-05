@@ -160,3 +160,10 @@ nav {
   .main-content { display: grid; grid-template-columns: 7fr 3fr; gap: 30px; }
   .sidebar { display: block; }
 }
+```
+--- 
+## Phần B
+### Câu B3:
+- Lệnh compile:
+Bash
+sass scss/style.scss css/style.css
