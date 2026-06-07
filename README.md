@@ -8,3 +8,5 @@
 2. Phiếu Bài Tập 2: Hoàn Tất.
 3. Phiếu Bài Tập 3: Hoàn Tất.
 4. Phiếu Bài Tập 4: Hoàn Tất.
+5. Phiếu Bài Tập 5: Hoàn Tất.
+6. Phiếu Bài Tập 6: Hoàn Tất.
