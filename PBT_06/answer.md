@@ -140,3 +140,94 @@
 ```html
 <div class="d-none d-md-flex">...</div>
 ```
+### Phần C:
+#### Câu C1:
+- Css thuần:
+```css
+.card {
+  width: 300px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+.image-container {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.image-container img {
+  width: 100%;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover img {
+  transform: scale(1.1);
+}
+
+.buy-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buy-btn:hover {
+  background-color: #2980b9;
+  color: #fff;
+  transform: scale(1.05);
+}
+```
+- Chuyển đổi sang Tailwind:
+```html
+<div class="w-[300px] p-[15px] border border-[#ddd] rounded-[8px] shadow-[0_4px_6px_rgba(0,0,0,0.1)] transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[0_12px_20px_rgba(0,0,0,0.2)]">
+  <div class="overflow-hidden rounded-[4px] group">
+    <img class="w-full block transition-transform duration-300 ease-in-out group-hover:scale-110" src="product.jpg" alt="Product">
+  </div>
+  <button class="mt-[15px] px-[20px] py-[10px] bg-[#3498db] text-white border-none rounded-[4px] cursor-pointer transition-all duration-300 ease-in-out hover:bg-[#2980b9] hover:scale-105">
+    Buy Now
+  </button>
+</div>
+```
+1. HTML file size (CSS thuần vs Tailwind HTML)
+    - CSS thuần: File HTML cực kỳ gọn nhẹ vì cấu trúc chỉ chứa các tên class ngắn (`class="card"`, `class="buy-btn"`).
+    - Tailwind HTML: Dung lượng file HTML sẽ nặng hơn rất nhiều (thường gấp 2 đến 3 lần) do phải gánh một lượng lớn các class tiện ích dài dằng dặc nối đuôi nhau để định hình giao diện.
+2. Maintainability
+    - Dễ đọc: CSS thuần thắng. Khi nhìn vào file HTML của CSS thuần, cấu trúc phân cấp rất sạch sẽ và tường minh. Trong khi đó, Tailwind tạo ra những "bức tường chữ" (class soup) khiến người mới nhìn vào rất dễ hoa mắt.
+    - Dễ sửa: Tailwind thắng tuyệt đối trong thực tế:
+        - Với CSS thuần, khi bạn sửa `.buy-btn`, nguy cơ cao là tất cả các nút bấm khác trên toàn hệ thống sử dụng class này cũng bị đổi theo (dễ sinh lỗi dây chuyền). Hoặc khi chuyển giao dự án, bạn sẽ mất thời gian tìm xem file `.css nằm ở đâu để sửa.
+        - Với Tailwind, bạn sửa trực tiếp tại chỗ trên thẻ HTML đó. Sửa phần tử nào chỉ ảnh hưởng đúng phần tử đó (được cô lập hoàn toàn), không sợ làm vỡ layout ở các trang khác.
+3. Reusability:
+    - CSS thuần: Tái sử dụng bằng cách gọi lại tên class (`.card`, `.buy-btn`) ở bất kỳ file HTML nào có liên kết với file CSS đó.
+    - Tailwind CSS: Có hai cách chính để tái sử dụng:
+        - Tái sử dụng cấp Component: Cắt đoạn HTML đó ra thành một Component riêng biệt (React, Vue, Blade component) rồi gọi lại `<ProductCard />`.
+        - Dùng `@apply` trong file CSS: Bạn gom các utility classes lại thành một class tùy chỉnh trong file CSS cấu hình:
+
+```css
+.custom-card {
+  @apply w-[300px] p-[15px] border border-[#ddd] rounded-[8px] shadow-sm transition-all duration-300;
+}
+```
+
+#### Câu C2:
+1. Tailwind CSS file cuối cùng NHỎ HƠN Bootstrap CSS vì:
+    - Bootstrap (Component-driven): File CSS chứa sẵn toàn bộ mã nguồn của mọi component (`.modal`, `.carousel`, `.btn`,...). Dù dự án chỉ dùng một vài class, trình duyệt vẫn phải tải về toàn bộ file CSS mặc định nặng khoảng 150KB+.
+    - Tailwind CSS (Utility-first): Thay vì tăng tiến tuyến tính, hệ thống class của Tailwind sẽ chạm ngưỡng bão hòa (các class cơ bản như `flex`, `pt-4` được tái sử dụng liên tục ở nhiều trang). File CSS production cuối cùng cực kỳ nhẹ, thường chỉ khoảng 10KB - 50KB.
+2. Giải thích Tailwind PurgeCSS
+    - Cơ chế hoạt động: Trình biên dịch JIT quét toàn bộ các file code (`.html`, `.js`, `.jsx`) theo thời gian thực. Bạn gõ class nào trong HTML, JIT mới sinh ra thuộc tính CSS tương ứng cho class đó.
+    - Nó loại bỏ gì? Loại bỏ tất cả các class không được sử dụng trong mã nguồn. Hàng vạn class tiện ích dư thừa về màu sắc, kích thước mặc định của thư viện sẽ bị xóa bỏ hoàn toàn khỏi file CSS cuối cùng.
+3. KHÔNG nên dùng TailwindCSS khi:
+    - Tình huống 1: Nội dung động từ trình soạn thảo (User-Generated Content). Khi làm trang tin tức, blog sử dụng WordPress hoặc CKEditor. Văn bản thô sinh ra từ DB (thẻ `<h2>`, `<p>)` không thể chèn class Tailwind trực tiếp, trong khi Tailwind mặc định lại reset sạch style của các thẻ này.\
+    - Tình huống 2: Xây dựng thư viện UI Component đóng gói (npm package). Khi viết một bộ widget độc lập để chia sẻ giữa nhiều dự án khác nhau (có dự án dùng Bootstrap, có dự án dùng CSS thuần). Dùng Tailwind ở lõi sẽ ép dự án tiêu thụ phải cài đặt và cấu hình build-tool đồng bộ, gây phụ thuộc phức tạp.
